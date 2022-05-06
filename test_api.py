@@ -1,12 +1,22 @@
-import pymongo 
-from pymongo  import MongoClient
+from collection import User_Collection
+import unittest
 
-client = MongoClient(host="localhost", port=27017)
+print(User_Collection)
 
-# ou bien 
+class TestUser(unittest.TestCase):
 
-db_uri = "mongodb+srv://Thomas:regliss22@cluster0.uc5d5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-client = MongoClient(db_uri)
+    def setUp(self):
+        User_Collection.insert_one({"name":"Thomas"})
 
-# affichage un objet
-# print(client.list_database_names())
+    def test_get(self):
+        # self.assertTrue(self.collection.name)
+        self.assertEqual({"name":"Thomas"}, User_Collection.find_one({"name":"Thomas"},{'_id': 0}))
+
+    # def test_post(self):
+    #     self.assertTrue(self.voiture_on.etat)
+    
+    # def test_put(self):
+    #     self.assertTrue(self.voiture_on.etat)
+    
+    # def test_delete(self):
+    #     self.assertTrue(self.voiture_on.etat)

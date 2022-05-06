@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_restful import reqparse, abort, Api, Resource
 import json
-from collection import Collection
+from collection import User_Collection
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
@@ -18,7 +18,7 @@ class User(Resource):
 
     def get(self, id):
         if request.method == "POST":
-            user = Collection.find_one({"_id": ObjectId(id)})
+            user = User_Collection.find_one({"_id": ObjectId(id)})
             return jsonify({
                 'status': '200',
                 'message': 'The request to get data has succeeded.',
@@ -35,7 +35,7 @@ class User(Resource):
         if request.method == "POST":
             print(json.loads(request.data))
             user = json.loads(request.data)
-            Collection.insert_one(user)
+            User_Collection.insert_one(user)
             return {
                 'status': '200',
                 'message': 'The user was created succsseffly.',
@@ -52,7 +52,7 @@ class User(Resource):
         if request.method == "PUT":
             print(json.loads(request.data))
             user = json.loads(request.data)
-            Collection.find_one_and_update({"_id":ObjectId(id)}, {"$set" : user}, upsert = True);
+            User_Collection.find_one_and_update({"_id":ObjectId(id)}, {"$set" : user}, upsert = True);
             return {
                 'status': 'ok',
                 'message': 'The user was moldified succsseffly.',
