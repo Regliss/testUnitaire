@@ -1,22 +1,29 @@
-from collection import User_Collection
-import unittest
+import requests
 
-print(User_Collection)
+# Test Create
+Create = requests.post("http://127.0.0.1:5000/create", json={"nom":"Thomas2", "age": 24}).status_code
+if Create == 200:
+    print("le Create marche")
+else:
+     print("le Create ne marche pas")
+ 
+# Test Get
+Get = requests.get("http://127.0.0.1:5000/user/Thomas2").status_code
+if Get == 200:
+    print("le Get marche")
+else:
+    print("le Get ne marche pas")
 
-class TestUser(unittest.TestCase):
+# Test Put
+Put = requests.put("http://127.0.0.1:5000/update/Thomas2", json={"nom":"Thomas3", "age": 24}).status_code
+if Put == 200:
+    print("le Put marche")
+else:
+    print("le Put ne marche pas")
 
-    def setUp(self):
-        User_Collection.insert_one({"name":"Thomas"})
-
-    def test_get(self):
-        # self.assertTrue(self.collection.name)
-        self.assertEqual({"name":"Thomas"}, User_Collection.find_one({"name":"Thomas"},{'_id': 0}))
-
-    # def test_post(self):
-    #     self.assertTrue(self.voiture_on.etat)
-    
-    # def test_put(self):
-    #     self.assertTrue(self.voiture_on.etat)
-    
-    # def test_delete(self):
-    #     self.assertTrue(self.voiture_on.etat)
+# Test GetAll
+GetAll = requests.get("http://127.0.0.1:5000/users").status_code
+if GetAll == 200:
+    print("le GetAll marche")
+else:
+    print("le GetAll ne marche pas")
